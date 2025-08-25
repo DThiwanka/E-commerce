@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luxe.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Block common bot paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow specific search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
