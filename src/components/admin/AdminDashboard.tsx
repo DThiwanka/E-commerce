@@ -7,12 +7,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast'
 import { useAuthStore } from '@/store/auth-store'
-import { 
-  Users, 
-  ShoppingCart, 
-  DollarSign, 
-  TrendingUp, 
-  Package, 
+import {
+  Users,
+  ShoppingCart,
+  DollarSign,
+  TrendingUp,
+  Package,
   AlertCircle,
   CheckCircle,
   Clock,
@@ -43,6 +43,13 @@ interface DashboardStats {
     name: string
     stock: number
   }>
+  totalProducts: number
+  featuredProducts: number
+  totalCategories: number
+  activeBanners: number
+  activePromotions: number
+  categorizedProducts: number
+  uncategorizedProducts: number
 }
 
 export default function AdminDashboard() {
@@ -54,7 +61,14 @@ export default function AdminDashboard() {
     totalRevenue: 0,
     pendingOrders: 0,
     recentOrders: [],
-    lowStockProducts: []
+    lowStockProducts: [],
+    totalProducts: 0,
+    featuredProducts: 0,
+    totalCategories: 0,
+    activeBanners: 0,
+    activePromotions: 0,
+    categorizedProducts: 0,
+    uncategorizedProducts: 0
   })
   const [isLoading, setIsLoading] = useState(true)
 
@@ -331,7 +345,7 @@ export default function AdminDashboard() {
                       <span className="font-medium">Total Products</span>
                     </div>
                     <p className="text-2xl font-bold">
-                      {stats.recentOrders.length > 0 ? '24' : '0'}
+                      {stats.totalProducts}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -346,7 +360,7 @@ export default function AdminDashboard() {
                       <TrendingUp className="h-5 w-5 text-green-500" />
                       <span className="font-medium">Featured</span>
                     </div>
-                    <p className="text-2xl font-bold">8</p>
+                    <p className="text-2xl font-bold">{stats.featuredProducts}</p>
                   </div>
                 </div>
               </div>
@@ -378,7 +392,7 @@ export default function AdminDashboard() {
                       <FolderOpen className="h-5 w-5 text-blue-500" />
                       <span className="font-medium">Total Categories</span>
                     </div>
-                    <p className="text-2xl font-bold">6</p>
+                    <p className="text-2xl font-bold">{stats.totalCategories}</p>
                     <p className="text-sm text-muted-foreground">Active categories</p>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -386,7 +400,7 @@ export default function AdminDashboard() {
                       <Package className="h-5 w-5 text-green-500" />
                       <span className="font-medium">Categorized Products</span>
                     </div>
-                    <p className="text-2xl font-bold">18</p>
+                    <p className="text-2xl font-bold">{stats.categorizedProducts}</p>
                     <p className="text-sm text-muted-foreground">Products with categories</p>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -394,7 +408,7 @@ export default function AdminDashboard() {
                       <Plus className="h-5 w-5 text-purple-500" />
                       <span className="font-medium">Uncategorized</span>
                     </div>
-                    <p className="text-2xl font-bold">6</p>
+                    <p className="text-2xl font-bold">{stats.uncategorizedProducts}</p>
                     <p className="text-sm text-muted-foreground">Products without categories</p>
                   </div>
                 </div>
@@ -486,7 +500,7 @@ export default function AdminDashboard() {
                       <ImageIcon className="h-5 w-5 text-blue-500" />
                       <span className="font-medium">Active Banners</span>
                     </div>
-                    <p className="text-2xl font-bold">3</p>
+                    <p className="text-2xl font-bold">{stats.activeBanners}</p>
                     <p className="text-sm text-muted-foreground">Homepage banners</p>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -494,7 +508,7 @@ export default function AdminDashboard() {
                       <Type className="h-5 w-5 text-green-500" />
                       <span className="font-medium">Active Promotions</span>
                     </div>
-                    <p className="text-2xl font-bold">2</p>
+                    <p className="text-2xl font-bold">{stats.activePromotions}</p>
                     <p className="text-sm text-muted-foreground">Current discounts</p>
                   </div>
                 </div>
