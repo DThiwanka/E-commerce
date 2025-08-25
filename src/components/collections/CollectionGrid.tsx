@@ -71,7 +71,7 @@ export default function CollectionGrid() {
     }
 
     const isInWishlist = wishlistItems.some(item => item.id === collection.id)
-    
+
     if (isInWishlist) {
       removeFromWishlist(collection.id)
       toast({
@@ -137,9 +137,9 @@ export default function CollectionGrid() {
           <TabsContent value="all" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {allCollections.map((collection) => (
-                <CollectionCard 
-                  key={collection.id} 
-                  collection={collection} 
+                <CollectionCard
+                  key={collection.id}
+                  collection={collection}
                   onWishlistToggle={handleWishlistToggle}
                   isInWishlist={wishlistItems.some(item => item.id === collection.id)}
                 />
@@ -150,9 +150,9 @@ export default function CollectionGrid() {
           <TabsContent value="featured" className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {featuredCollections.map((collection) => (
-                <CollectionCard 
-                  key={collection.id} 
-                  collection={collection} 
+                <CollectionCard
+                  key={collection.id}
+                  collection={collection}
                   onWishlistToggle={handleWishlistToggle}
                   isInWishlist={wishlistItems.some(item => item.id === collection.id)}
                   featured={true}
@@ -209,14 +209,14 @@ function CollectionCard({ collection, onWishlistToggle, isInWishlist, featured =
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
-          
+
           {/* Featured Badge */}
           {collection.featured && (
             <Badge className="absolute top-4 left-4 bg-gold text-charcoal hover:bg-gold/90">
               Featured
             </Badge>
           )}
-          
+
           {/* Wishlist Button */}
           <Button
             size="icon"
@@ -227,10 +227,10 @@ function CollectionCard({ collection, onWishlistToggle, isInWishlist, featured =
           >
             <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-red-500 text-red-500' : ''}`} />
           </Button>
-          
+
           {/* Product Count Overlay */}
           <div className="absolute bottom-4 left-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm">
-            {collection.productCount} pieces
+            {typeof collection.productCount === 'number' ? collection.productCount : 0} pieces
           </div>
         </div>
 
@@ -241,35 +241,35 @@ function CollectionCard({ collection, onWishlistToggle, isInWishlist, featured =
             <h3 className="text-xl font-bold text-charcoal group-hover:text-royal-blue transition-colors">
               {collection.name}
             </h3>
-            
+
             {/* Description */}
             <p className="text-gray-600 line-clamp-2">
               {collection.description}
             </p>
-            
+
             {/* Tags */}
-            {collection.tags && collection.tags.length > 0 && (
+            {collection.tags && Array.isArray(collection.tags) && collection.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {collection.tags.map((tag, index) => (
                   <Badge key={index} variant="outline" className="text-xs">
-                    {tag}
+                    {String(tag)}
                   </Badge>
                 ))}
               </div>
             )}
-            
+
             {/* Actions */}
             <div className="flex items-center justify-between pt-2">
-              <Link href={`/collections/${collection.slug}`}>
+              <Link href={`/collections/${typeof collection.slug === 'string' ? collection.slug : String(collection.slug)}`}>
                 <Button variant="outline" size="sm" className="group">
                   <Eye className="h-4 w-4 mr-2" />
                   View Collection
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              
+
               <span className="text-sm text-gray-500">
-                {collection.productCount} items
+                {typeof collection.productCount === 'number' ? collection.productCount : 0} items
               </span>
             </div>
           </div>

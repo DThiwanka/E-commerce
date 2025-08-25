@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
 export async function GET(request: NextRequest) {
+  // Get categorized products count
+  const categorizedProducts = await db.product.count({
+    where: { categoryId: { not: null } }
+  })
+
+  // Get uncategorized products count
+  const uncategorizedProducts = await db.product.count({
+    where: { categoryId: null }
+  })
   try {
     // Get total users count
     const totalUsers = await db.user.count({
@@ -48,6 +57,26 @@ export async function GET(request: NextRequest) {
       },
       take: 10
     })
+    // Get total products
+    const totalProducts = await db.product.count()
+
+    // Get featured products count
+    const featuredProducts = await db.product.count({
+      where: { featured: true }
+    })
+
+    // Get total categories
+    const totalCategories = await db.category.count()
+
+    // Get active banners count
+    const activeBanners = await db.banner.count({
+      where: { active: true }
+    })
+
+    // Get active promotions count
+    const activePromotions = await db.promotion.count({
+      where: { active: true }
+    })
 
     return NextResponse.json({
       totalUsers,
@@ -55,7 +84,14 @@ export async function GET(request: NextRequest) {
       totalRevenue,
       pendingOrders,
       recentOrders,
-      lowStockProducts
+      lowStockProducts,
+      totalProducts,
+      featuredProducts,
+      totalCategories,
+      activeBanners,
+      activePromotions,
+      categorizedProducts,
+      uncategorizedProducts
     })
   } catch (error) {
     console.error('Dashboard API error:', error)
